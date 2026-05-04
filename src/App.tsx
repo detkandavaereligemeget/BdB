@@ -447,7 +447,7 @@ export default function App() {
       {/* Constraints Grid */}
       <section className="py-20 px-6 md:px-12 max-w-7xl mx-auto" id="krav">
         <div className="mb-16 max-w-2xl" id="krav-header">
-          <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Lovens krav til systemet</h2>
+          <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Lovens krav til digital bogføringssystemer</h2>
           <p className="text-slate-600">Din bogføring skal leve op til 34 krav. Vi har kogt de vigtigste punkter ned her.</p>
         </div>
         
@@ -493,76 +493,74 @@ export default function App() {
       {/* Solutions / Pricing */}
       <section className="bg-blue-600 py-24 text-white relative overflow-hidden" id="losninger">
         <div className="absolute top-0 right-0 w-1/3 h-full bg-blue-500 opacity-50 skew-x-12 translate-x-32" />
-        <div className="max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-16 relative z-10" id="pricing-container">
-          <div>
-            <h2 className="text-4xl font-extrabold mb-8">Vi har sat os grundigt ind i loven - så du ikke behøver</h2>
-            <p className="text-xl text-blue-100 mb-10 leading-relaxed">
-              Vores løsninger gør det muligt at opfylde samtlige krav uden at bruge mange timer på it-udvikling eller lære komplicerede systemer.
-            </p>
-            <div className="space-y-4">
-              {['Simpelt og let trin-for-trin vejledning', 'Garanteret overholdelse af loven', 'Support på dansk', 'Ingen tekniske forkundskaber påkrævet'].map((item, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <CheckCircle2 className="text-blue-200 w-6 h-6" />
-                  <span className="font-medium">{item}</span>
+        <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10" id="pricing-wrapper">
+          <div className="grid md:grid-cols-2 gap-16 mb-16 items-center" id="pricing-top">
+            <div>
+              <h2 className="text-4xl font-extrabold mb-8 leading-tight">Vi har sat os grundigt ind i loven - så du ikke behøver</h2>
+              <p className="text-xl text-blue-100 mb-10 leading-relaxed">
+                Vores løsninger gør det muligt at opfylde samtlige krav uden at bruge mange timer på it-udvikling eller lære komplicerede systemer.
+              </p>
+              <div className="space-y-4">
+                {['Simpelt og let trin-for-trin vejledning', 'Garanteret overholdelse af loven', 'Support på dansk', 'Ingen tekniske forkundskaber påkrævet'].map((item, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <CheckCircle2 className="text-blue-200 w-6 h-6" />
+                    <span className="font-medium">{item}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="bg-white text-slate-900 p-10 rounded-3xl shadow-2xl relative" id="pricing-card">
+              <div className="absolute top-6 right-6 bg-red-500 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest animate-pulse">Spar 40 %</div>
+              <h3 className="text-2xl font-bold mb-2">Den samlede pakke</h3>
+              <p className="text-slate-500 mb-8 text-sm italic">Opfyld alle automatiseringskravene i én pakke</p>
+              <div className="flex items-baseline gap-2 mb-8" id="price">
+                <span className="text-6xl font-black tracking-tighter">1.995,-</span>
+                <span className="text-slate-400 font-bold uppercase tracking-widest text-xs">Ex. Moms</span>
+              </div>
+              <ul className="space-y-5 mb-10">
+                <li className="flex items-start gap-3 text-sm font-medium border-b border-slate-100 pb-4">
+                  <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0 mt-0.5" />
+                  Kræver minimal indsats at sætte op
+                </li>
+                <li className="flex items-start gap-3 text-sm font-medium border-b border-slate-100 pb-4">
+                  <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0 mt-0.5" />
+                  Kan klares på én dag
+                </li>
+                <li className="flex items-start gap-3 text-sm font-medium border-b border-slate-100 pb-4">
+                  <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0 mt-0.5" />
+                  Grundig vejledning og tekst til bogføringsprocedurebeskrivelsen følger med
+                </li>
+              </ul>
+              <button 
+                onClick={handleContactClick}
+                className="block w-full bg-blue-600 text-white text-center py-5 rounded-2xl text-lg font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-100"
+                id="cta-buy"
+              >
+                Kom godt i gang
+              </button>
+            </div>
+          </div>
+
+          <div className="bg-slate-50 text-slate-900 p-8 md:p-12 rounded-[2.5rem] border border-slate-200" id="individual-prices-card">
+            <h3 className="text-xl font-bold mb-8 flex items-center gap-2">
+              <Info className="text-blue-600 w-6 h-6" /> Prisen pr. løsning
+            </h3>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-12 gap-y-6">
+              {[
+                { name: 'E-faktura', price: 995 },
+                { name: 'SAF-T-fil', price: 1195 },
+                { name: 'Bankafstemning', price: 345 },
+                { name: 'Sikkerhedskopiering (opbevaring)', price: 795 },
+                { name: 'Kontoplan', price: 0, label: 'Gratis' },
+                { name: 'Tjek af SAF-T-fil', price: 495 }
+              ].map((item, idx) => (
+                <div key={idx} className="flex justify-between items-center text-sm pb-4 border-b border-slate-200/50">
+                  <span className="text-slate-600 font-medium">{item.name}</span>
+                  <span className="font-bold tabular-nums text-slate-900">{item.label || `${item.price.toLocaleString('da-DK')},-`}</span>
                 </div>
               ))}
             </div>
-          </div>
-          <div className="bg-white text-slate-900 p-10 rounded-3xl shadow-2xl relative" id="pricing-card">
-            <div className="absolute top-6 right-6 bg-red-500 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest animate-pulse">Spar 40 %</div>
-            <h3 className="text-2xl font-bold mb-2">Den samlede pakke</h3>
-            <p className="text-slate-500 mb-8 text-sm italic">Opfyld alle automatiseringskravene i én pakke</p>
-            <div className="flex items-baseline gap-2 mb-8" id="price">
-              <span className="text-6xl font-black tracking-tighter">1.995,-</span>
-              <span className="text-slate-400 font-bold uppercase tracking-widest text-xs">Ex. Moms</span>
-            </div>
-            <ul className="space-y-5 mb-10">
-              <li className="flex items-start gap-3 text-sm font-medium border-b border-slate-100 pb-4">
-                <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0 mt-0.5" />
-                Kræver minimal indsats at sætte op
-              </li>
-              <li className="flex items-start gap-3 text-sm font-medium border-b border-slate-100 pb-4">
-                <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0 mt-0.5" />
-                Kan klares på én dag
-              </li>
-              <li className="flex items-start gap-3 text-sm font-medium border-b border-slate-100 pb-4">
-                <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0 mt-0.5" />
-                Grundig vejledning og tekst til bogføringsprocedurebeskrivelsen følger med
-              </li>
-            </ul>
-            <button 
-              onClick={handleContactClick}
-              className="block w-full bg-blue-600 text-white text-center py-5 rounded-2xl text-lg font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-100"
-              id="cta-buy"
-            >
-              Kom godt i gang
-            </button>
-          </div>
-
-          <div className="space-y-8">
-            <div className="bg-slate-50 text-slate-900 p-10 rounded-3xl border border-slate-200" id="individual-prices-card">
-              <h3 className="text-xl font-bold mb-6">Prisen pr. løsning</h3>
-              <div className="space-y-4">
-                {[
-                  { name: 'E-faktura', price: 995 },
-                  { name: 'SAF-T-fil', price: 1195 },
-                  { name: 'Bankafstemning', price: 345 },
-                  { name: 'Sikkerhedskopiering (opbevaring)', price: 795 },
-                  { name: 'Kontoplan', price: 0, label: 'Gratis' },
-                  { name: 'Tjek af SAF-T-fil', price: 495 }
-                ].map((item, idx) => (
-                  <div key={idx} className="flex justify-between items-center text-sm pb-4 border-b border-slate-100 last:border-0 last:pb-0">
-                    <span className="text-slate-600">{item.name}</span>
-                    <span className="font-bold tabular-nums">{item.label || `${item.price.toLocaleString('da-DK')},-`}</span>
-                  </div>
-                ))}
-                <div className="flex justify-between items-center pt-4 text-slate-900 font-black text-lg">
-                  <span>Samlet pris</span>
-                  <span className="tabular-nums">3.825,-</span>
-                </div>
-                <p className="text-[10px] text-slate-400 mt-4 italic">* Alle priser er ekskl. moms</p>
-              </div>
-            </div>
+            <p className="text-[10px] text-slate-400 mt-8 italic text-center">* Alle priser er ekskl. moms</p>
           </div>
         </div>
       </section>
