@@ -33,6 +33,25 @@ const stagger = {
   }
 };
 
+// Email Obfuscation Component to prevent scraping
+const ObfuscatedEmail = ({ className = "" }: { className?: string }) => {
+  const [user] = useState('info');
+  const [domain] = useState('behold-dit-bogforingsprogram.dk');
+  
+  return (
+    <a 
+      href={`mailto:${user}@${domain}`}
+      className={className}
+      onClick={(e) => {
+        // Fallback for extreme cases
+        if (!user || !domain) e.preventDefault();
+      }}
+    >
+      {user}<span className="hidden">anti-spam</span>@{domain}
+    </a>
+  );
+};
+
 export default function App() {
   const [showContactPage, setShowContactPage] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -175,7 +194,7 @@ export default function App() {
                   </div>
 
                   <div className="space-y-6 pt-6 border-t border-slate-100">
-                    <h3 className="font-bold text-lg">Dit nuværende system:</h3>
+                    <h3 className="font-bold text-lg">Nuværende bogføringsprogram:</h3>
                     
                     <div className="space-y-4">
                       {/* Backup */}
@@ -292,7 +311,7 @@ export default function App() {
                         required
                         type="text" 
                         className="w-full px-5 py-4 bg-slate-50 border-0 rounded-2xl focus:ring-2 focus:ring-blue-600"
-                        placeholder="Skriv svar her (fx 8 eller menneske)"
+                        placeholder="Skriv svar her"
                         value={formData.humanCheck}
                         onChange={e => setFormData({...formData, humanCheck: e.target.value})}
                       />
@@ -518,24 +537,30 @@ export default function App() {
             >
               Kom godt i gang
             </button>
+          </div>
 
-            {/* Individual Prices */}
-            <div className="mt-12 pt-8 border-t border-slate-100">
-              <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-6">Priser på enkelte moduler</h4>
+          <div className="space-y-8">
+            <div className="bg-slate-50 text-slate-900 p-10 rounded-3xl border border-slate-200" id="individual-prices-card">
+              <h3 className="text-xl font-bold mb-6">Prisen pr. løsning</h3>
               <div className="space-y-4">
                 {[
-                  { name: 'E-faktura', price: '995,-' },
-                  { name: 'SAF-T-fil', price: '1.195,-' },
-                  { name: 'Bankafstemning', price: '345,-' },
-                  { name: 'Sikkerhedskopiering (opbevaring)', price: '795,-' },
-                  { name: 'Kontoplan', price: 'Gratis' },
-                  { name: 'Tjek af SAF-T-fil', price: '495,-' }
+                  { name: 'E-faktura', price: 995 },
+                  { name: 'SAF-T-fil', price: 1195 },
+                  { name: 'Bankafstemning', price: 345 },
+                  { name: 'Sikkerhedskopiering (opbevaring)', price: 795 },
+                  { name: 'Kontoplan', price: 0, label: 'Gratis' },
+                  { name: 'Tjek af SAF-T-fil', price: 495 }
                 ].map((item, idx) => (
-                  <div key={idx} className="flex justify-between items-center text-sm">
+                  <div key={idx} className="flex justify-between items-center text-sm pb-4 border-b border-slate-100 last:border-0 last:pb-0">
                     <span className="text-slate-600">{item.name}</span>
-                    <span className="font-bold tabular-nums">{item.price}</span>
+                    <span className="font-bold tabular-nums">{item.label || `${item.price.toLocaleString('da-DK')},-`}</span>
                   </div>
                 ))}
+                <div className="flex justify-between items-center pt-4 text-slate-900 font-black text-lg">
+                  <span>Samlet pris</span>
+                  <span className="tabular-nums">3.825,-</span>
+                </div>
+                <p className="text-[10px] text-slate-400 mt-4 italic">* Alle priser er ekskl. moms</p>
               </div>
             </div>
           </div>
@@ -553,7 +578,7 @@ export default function App() {
             <div className="space-y-4 mb-8">
               <div className="flex items-center gap-3 text-blue-400 font-medium">
                 <Mail className="w-5 h-5" />
-                <a href="mailto:info@behold-dit-bogforingsprogram.dk" className="hover:underline">info@behold-dit-bogforingsprogram.dk</a>
+                <ObfuscatedEmail className="hover:underline" />
               </div>
               <div className="flex items-start gap-3 text-slate-400">
                 <MapPin className="w-5 h-5 mt-1 shrink-0" />
@@ -587,7 +612,7 @@ export default function App() {
       {/* Footer */}
       <footer className="bg-white border-t border-slate-200 py-12 px-6 md:px-12 text-center" id="footer">
         <div className="max-w-7xl mx-auto text-slate-400 text-xs text-center border-t border-slate-100 pt-8 mt-8">
-          <p>© 2024 Laursen Consulting ApS. Alle rettigheder forbeholdes.</p>
+          <p>© 2026 Laursen Consulting ApS. Alle rettigheder forbeholdes.</p>
         </div>
       </footer>
     </div>
