@@ -49,7 +49,7 @@ export default function App() {
           <a href="#losninger" className="text-sm font-medium hover:text-blue-600 transition-colors">Løsninger</a>
           <a href="#om-os" className="text-sm font-medium hover:text-blue-600 transition-colors">Om os</a>
           <a 
-            href="#priser" 
+            href="#losninger" 
             className="bg-blue-600 text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-blue-700 transition-all shadow-sm shadow-blue-200"
             id="nav-cta"
           >
@@ -65,7 +65,7 @@ export default function App() {
             <CheckCircle2 className="w-4 h-4" /> Overhold bogføringsloven nemt
           </div>
           <h1 className="text-5xl md:text-7xl font-extrabold leading-[1.1] mb-8 tracking-tight" id="hero-title">
-            Gør dit nuværende program <span className="text-blue-600">lovligt</span>
+            Du skal ikke skifte dit <span className="text-blue-600">bogføringsprogram</span>
           </h1>
           <p className="text-xl text-slate-600 mb-10 leading-relaxed max-w-xl" id="hero-subtitle">
             Hvorfor skifte bogføringsprogram, når det stadigvæk virker? Vi hjælper dig med at opfylde kravene om digital bogføring til en brøkdel af prisen.
@@ -98,84 +98,26 @@ export default function App() {
           <div className="absolute -inset-4 bg-gradient-to-tr from-blue-100 to-indigo-100 rounded-3xl blur-3xl opacity-50 -z-10" />
           <div className="bg-white p-8 rounded-3xl shadow-2xl border border-slate-100 relative overflow-hidden" id="hero-card">
             <div className="flex justify-between items-center mb-8 border-b border-slate-100 pb-6">
-              <h3 className="font-bold text-lg">Digitaliseringstjek</h3>
-              <Clock className="text-slate-400 w-5 h-5" />
+              <h3 className="font-bold text-lg text-slate-800">5 krav til digital bogføring</h3>
+              <FileDigit className="text-blue-500 w-5 h-5" />
             </div>
-            <div className="space-y-6">
+            <div className="space-y-5">
               {[
-                { label: 'E-fakturering (OIOUBL)', status: 100 },
-                { label: 'SAF-T fildeling', status: 100 },
-                { label: 'Sikkerhedskopiering', status: 100 },
-                { label: 'Backup hos 3. part', status: 100 }
+                'Nøjagtig registrering snarest muligt',
+                'Sikring af transaktionsspor',
+                'Sikring af kontrolspor og bilag',
+                'Betryggende opbevaring i 5 år',
+                'Sikring mod fejl og misbrug'
               ].map((item, idx) => (
-                <div key={idx} className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="font-medium text-slate-700">{item.label}</span>
-                    <span className="text-green-600 font-bold uppercase text-[10px] tracking-widest mt-0.5">Godkendt</span>
+                <div key={idx} className="flex items-center gap-3">
+                  <div className="w-6 h-6 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-xs font-bold shrink-0">
+                    {idx + 1}
                   </div>
-                  <div className="h-2 bg-slate-100 rounded-full overflow-hidden">
-                    <motion.div 
-                      initial={{ width: 0 }}
-                      animate={{ width: `${item.status}%` }}
-                      transition={{ duration: 1, delay: 0.5 + idx * 0.2 }}
-                      className="h-full bg-green-500 rounded-full" 
-                    />
-                  </div>
+                  <span className="text-sm font-medium text-slate-700">{item}</span>
                 </div>
               ))}
             </div>
           </div>
-        </motion.div>
-      </section>
-
-      {/* Warning Section */}
-      <section className="bg-slate-900 py-20 text-white" id="warning">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <motion.div {...fadeIn}>
-            <AlertCircle className="w-16 h-16 text-amber-500 mx-auto mb-8 animate-pulse" />
-            <h2 className="text-3xl md:text-5xl font-bold mb-8 leading-tight">
-              Bøder op til <span className="text-amber-500 italic">1,5 mio. kr.</span>
-            </h2>
-            <p className="text-xl text-slate-300 leading-relaxed mb-8">
-              Folketinget har bestemt, at danske selskaber og visse enkeltmandsvirksomheder (over 300.000 kr. omsætning) SKAL bruge et digitalt bogføringssystem. Kravene gælder allerede for selskaber, og fra 1. januar 2026 for enkeltmandsvirksomheder.
-            </p>
-            <div className="bg-white/5 border border-white/10 p-6 rounded-2xl inline-block text-slate-400 text-sm">
-              Kilder: Bogføringslovens § 33 og bekendtgørelse nr. 205
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Constraints Grid */}
-      <section className="py-20 px-6 md:px-12 max-w-7xl mx-auto" id="krav">
-        <div className="mb-16 max-w-2xl" id="krav-header">
-          <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Lovens krav til systemet</h2>
-          <p className="text-slate-600">Din bogføring skal leve op til 34 tjekpunkter. Vi har kogt de vigtigste punkter ned her.</p>
-        </div>
-        
-        <motion.div 
-          variants={stagger}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
-          id="krav-grid"
-        >
-          {requirements.map((krav, idx) => (
-            <motion.div 
-              key={idx}
-              variants={fadeIn}
-              className="bg-white p-8 rounded-2xl border border-slate-100 hover:border-blue-200 transition-colors shadow-sm group"
-              id={`krav-${idx}`}
-            >
-              <div className="bg-blue-50 w-14 h-14 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                <krav.icon className="w-7 h-7" />
-              </div>
-              <h3 className="text-xl font-bold mb-4">{krav.title}</h3>
-              <p className="text-slate-600 text-sm leading-relaxed mb-6">{krav.desc}</p>
-              <div className="text-[11px] font-bold text-blue-500 uppercase tracking-widest">{krav.paragraph}</div>
-            </motion.div>
-          ))}
         </motion.div>
       </section>
 
@@ -212,7 +154,7 @@ export default function App() {
               </li>
               <li className="flex items-center gap-3 text-sm font-medium border-b border-slate-100 pb-4">
                 <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0" />
-                Fuld installation af bl.a. E-faktura & SAF-T
+                Fuld løsning af bl.a. E-faktura & SAF-T
               </li>
               <li className="flex items-center gap-3 text-sm font-medium border-b border-slate-100 pb-4">
                 <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0" />
@@ -220,23 +162,57 @@ export default function App() {
               </li>
             </ul>
             <a 
-              href="#" 
+              href="mailto:info@behold-dit-bogforingsprogram.dk" 
               className="block w-full bg-blue-600 text-white text-center py-5 rounded-2xl text-lg font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-100"
               id="cta-buy"
             >
-              Kom i gang nu
+              Kom godt i gang
             </a>
           </div>
         </div>
       </section>
+
+      {/* Constraints Grid */}
+      <section className="py-20 px-6 md:px-12 max-w-7xl mx-auto" id="krav">
+        <div className="mb-16 max-w-2xl" id="krav-header">
+          <h2 className="text-3xl md:text-4xl font-extrabold mb-4">Lovens krav til systemet</h2>
+          <p className="text-slate-600">Din bogføring skal leve op til 34 krav. Vi har kogt de vigtigste punkter ned her.</p>
+        </div>
+        
+        <motion.div 
+          variants={stagger}
+          initial="initial"
+          whileInView="animate"
+          viewport={{ once: true }}
+          className="grid md:grid-cols-2 lg:grid-cols-3 gap-8"
+          id="krav-grid"
+        >
+          {requirements.map((krav, idx) => (
+            <motion.div 
+              key={idx}
+              variants={fadeIn}
+              className="bg-white p-8 rounded-2xl border border-slate-100 hover:border-blue-200 transition-colors shadow-sm group"
+              id={`krav-${idx}`}
+            >
+              <div className="bg-blue-50 w-14 h-14 rounded-xl flex items-center justify-center mb-6 group-hover:bg-blue-600 group-hover:text-white transition-all">
+                <krav.icon className="w-7 h-7" />
+              </div>
+              <h3 className="text-xl font-bold mb-4">{krav.title}</h3>
+              <p className="text-slate-600 text-sm leading-relaxed mb-6">{krav.desc}</p>
+              <div className="text-[11px] font-bold text-blue-500 uppercase tracking-widest">{krav.paragraph}</div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </section>
+
 
       {/* Software Support */}
       <section className="py-20 bg-slate-100" id="software">
         <div className="max-w-7xl mx-auto px-6 text-center">
           <h2 className="text-2xl font-bold text-slate-500 uppercase tracking-widest mb-12">Vi understøtter bl.a.</h2>
           <div className="flex flex-wrap justify-center gap-8 md:gap-20 opacity-50 grayscale hover:grayscale-0 transition-all cursor-default" id="software-logos">
-            <span className="text-3xl font-extrabold tracking-tight">Business Central</span>
-            <span className="text-3xl font-extrabold tracking-tight">Microsoft C5</span>
+            <span className="text-3xl font-extrabold tracking-tight">Microsoft Business Central - on premise</span>
+            <span className="text-3xl font-extrabold tracking-tight">C5</span>
             <span className="text-3xl font-extrabold tracking-tight">Navision</span>
             <span className="text-3xl font-extrabold tracking-tight">XAL</span>
           </div>
@@ -258,26 +234,39 @@ export default function App() {
               </p>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4" id="consultants">
-            <div className="space-y-4 pt-12">
-              <div className="aspect-square bg-slate-800 rounded-3xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
-                <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=400" alt="Dennis Laursen" className="w-full h-full object-cover" />
-              </div>
-              <div>
-                <h4 className="font-bold">Dennis Lindberg Laursen</h4>
-                <p className="text-slate-500 text-xs">Jurist & Ejer</p>
-              </div>
+          <div className="grid grid-cols-1 gap-4" id="consultants">
+            <div className="bg-slate-800/50 p-6 rounded-3xl border border-slate-700">
+              <h4 className="font-bold text-xl mb-1">Dennis Lindberg Laursen</h4>
+              <p className="text-blue-400 text-sm font-semibold uppercase tracking-wider">Jurist & Ejer</p>
             </div>
-            <div className="space-y-4">
-              <div className="aspect-square bg-slate-800 rounded-3xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-500">
-                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=400" alt="Jossiane Laursen" className="w-full h-full object-cover" />
-              </div>
-              <div>
-                <h4 className="font-bold">Jossiane Laursen</h4>
-                <p className="text-slate-500 text-xs">Jurist & Ejer</p>
-              </div>
+            <div className="bg-slate-800/50 p-6 rounded-3xl border border-slate-700">
+              <h4 className="font-bold text-xl mb-1">Jossiane Laursen</h4>
+              <p className="text-blue-400 text-sm font-semibold uppercase tracking-wider">Jurist & Ejer</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Warning Section (Moved to end) */}
+      <section className="bg-white py-24" id="warning">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            className="bg-amber-50 border-2 border-amber-100 p-12 rounded-[2.5rem]"
+          >
+            <AlertCircle className="w-16 h-16 text-amber-600 mx-auto mb-8" />
+            <h2 className="text-3xl md:text-5xl font-black mb-8 leading-tight text-slate-900">
+              Bøder op til <span className="text-amber-600 italic text-4xl md:text-6xl block mt-2">1,5 mio. kr.</span>
+            </h2>
+            <p className="text-xl text-slate-700 leading-relaxed mb-8 font-medium">
+              Folketinget har bestemt, at danske selskaber og visse enkeltmandsvirksomheder (over 300.000 kr. omsætning) SKAL bruge et digitalt bogføringssystem. Kravene gælder allerede for selskaber, og fra 1. januar 2026 for enkeltmandsvirksomheder.
+            </p>
+            <div className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">
+              Kilder: Bogføringslovens § 33 og bekendtgørelse nr. 205
+            </div>
+          </motion.div>
         </div>
       </section>
 
@@ -307,20 +296,16 @@ export default function App() {
               </div>
             </div>
             <div className="space-y-4">
-              <h5 className="font-bold text-sm uppercase tracking-widest text-slate-400">Vigtig Info</h5>
+              <h5 className="font-bold text-sm uppercase tracking-widest text-slate-400">Firma Info</h5>
               <div className="space-y-2 text-sm text-slate-600">
-                <p>CVR-nr: 4124 2647</p>
                 <p>Laursen Consulting ApS</p>
+                <p>CVR-nr: 4124 2647</p>
               </div>
             </div>
           </div>
         </div>
-        <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-slate-100 text-slate-400 text-xs flex flex-col md:flex-row justify-between gap-4">
+        <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-slate-100 text-slate-400 text-xs flex flex-col md:flex-row justify-center gap-4">
           <p>© 2024 Laursen Consulting ApS. Alle rettigheder forbeholdes.</p>
-          <div className="flex gap-6">
-            <a href="#" className="hover:text-blue-600">Betingelser</a>
-            <a href="#" className="hover:text-blue-600">Privatlivspolitik</a>
-          </div>
         </div>
       </footer>
     </div>
@@ -366,7 +351,7 @@ const requirements = [
   },
   {
     title: 'E-fakturering',
-    desc: 'Automatisk afsendelse og modtagelse af e-fakturaer og kreditnotaer i OIOUBL- eller Peppol BIS-format via Nemhandel.',
+    desc: 'Automatisk afsendelse og modtagelse af e-fakturaer og kreditnotaer i OIOUBL-format via Nemhandel eller Peppol BIS-format.',
     paragraph: 'Bekendtgørelsens § 5',
     icon: Euro
   },
