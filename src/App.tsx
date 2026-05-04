@@ -52,6 +52,29 @@ const ObfuscatedEmail = ({ className = "" }: { className?: string }) => {
   );
 };
 
+// Logo Component
+const Logo = ({ className = "" }: { className?: string }) => {
+  const [imageError, setImageError] = useState(false);
+  
+  return (
+    <div className={`flex items-center gap-3 ${className}`}>
+      {!imageError ? (
+        <img 
+          src="/logo.png" 
+          alt="Laursen Consulting" 
+          className="h-10 w-auto"
+          onError={() => setImageError(true)}
+        />
+      ) : (
+        <div className="flex flex-col">
+          <span className="text-lg font-black tracking-tighter text-slate-900 leading-none">LAURSEN</span>
+          <span className="text-[10px] font-bold tracking-[0.2em] text-blue-600 uppercase leading-none mt-1">Consulting</span>
+        </div>
+      )}
+    </div>
+  );
+};
+
 export default function App() {
   const [showContactPage, setShowContactPage] = useState(false);
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -117,9 +140,7 @@ export default function App() {
       <div className="min-h-screen bg-slate-50 font-sans text-slate-900 pb-20">
         <nav className="bg-white border-b border-slate-200 py-4 px-6 md:px-12 flex justify-between items-center sticky top-0 z-50">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => setShowContactPage(false)}>
-            <img src="/logo.png" alt="Logo" className="h-10 w-auto" onError={(e) => e.currentTarget.style.display = 'none'} />
-            <ShieldCheck className="text-blue-600 w-8 h-8 md:hidden" />
-            <span className="text-xl font-bold tracking-tight text-slate-800">Behold dit bogføringsprogram</span>
+            <Logo />
           </div>
           <button 
             onClick={() => setShowContactPage(false)}
@@ -365,9 +386,7 @@ export default function App() {
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-slate-200 z-50 py-4 px-6 md:px-12 flex justify-between items-center" id="navbar">
         <div className="flex items-center gap-2" id="logo-container">
-          <img src="/logo.png" alt="Logo" className="h-10 w-auto" onError={(e) => e.currentTarget.style.display = 'none'} />
-          <ShieldCheck className="text-blue-600 w-8 h-8 md:hidden" />
-          <span className="text-xl font-bold tracking-tight text-slate-800">Behold dit bogføringsprogram</span>
+          <Logo />
         </div>
         <div className="hidden md:flex gap-8 items-center" id="nav-links">
           <a href="#krav" className="text-sm font-medium hover:text-blue-600 transition-colors">Loven</a>
@@ -444,6 +463,29 @@ export default function App() {
         </motion.div>
       </section>
 
+      {/* Software Support */}
+      <section className="py-16 bg-white border-y border-slate-100" id="software">
+        <div className="max-w-7xl mx-auto px-6" id="software-container">
+          <p className="text-center text-[10px] font-bold text-slate-400 uppercase tracking-[0.3em] mb-12">Vi understøtter bl.a. disse systemer</p>
+          <div className="flex flex-wrap justify-center items-center gap-10 md:gap-24" id="software-logos">
+            <div className="flex flex-col items-center group">
+              <span className="text-xl md:text-2xl font-black text-slate-400 group-hover:text-blue-600 transition-colors">Microsoft Business Central</span>
+              <span className="text-[10px] font-bold text-slate-400 group-hover:text-slate-500 uppercase tracking-widest mt-1 italic">on premise</span>
+            </div>
+            <div className="flex items-baseline gap-1 group">
+              <span className="text-3xl md:text-5xl font-black text-slate-400 group-hover:text-blue-600 transition-colors">C5</span>
+            </div>
+            <div className="flex items-baseline gap-1 group">
+              <span className="text-3xl md:text-4xl font-light text-slate-400 group-hover:text-blue-600 transition-colors tracking-tighter">NAV</span>
+              <span className="text-lg font-bold text-slate-400 group-hover:text-blue-400 italic">ision</span>
+            </div>
+            <div className="flex items-baseline gap-1 group">
+              <span className="text-3xl md:text-5xl font-black text-slate-400 group-hover:text-blue-600 transition-colors italic">XAL</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Constraints Grid */}
       <section className="py-20 px-6 md:px-12 max-w-7xl mx-auto" id="krav">
         <div className="mb-16 max-w-2xl" id="krav-header">
@@ -475,19 +517,6 @@ export default function App() {
             </motion.div>
           ))}
         </motion.div>
-      </section>
-
-      {/* Software Support */}
-      <section className="py-20 bg-slate-100" id="software">
-        <div className="max-w-7xl mx-auto px-6 text-center" id="software-container">
-          <h2 className="text-2xl font-bold text-slate-500 uppercase tracking-widest mb-12">Vi understøtter bl.a.</h2>
-          <div className="flex flex-wrap justify-center gap-8 md:gap-20 opacity-50 grayscale hover:grayscale-0 transition-all cursor-default" id="software-logos">
-            <span className="text-3xl font-extrabold tracking-tight">Microsoft Business Central - on premise</span>
-            <span className="text-3xl font-extrabold tracking-tight">C5</span>
-            <span className="text-3xl font-extrabold tracking-tight">Navision</span>
-            <span className="text-3xl font-extrabold tracking-tight">XAL</span>
-          </div>
-        </div>
       </section>
 
       {/* Solutions / Pricing */}
