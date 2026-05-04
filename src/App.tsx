@@ -59,12 +59,12 @@ export default function App() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 md:pt-48 md:pb-32 px-6 md:px-12 max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center" id="hero">
-        <motion.div {...fadeIn} className="z-10">
+      <section className="pt-32 pb-20 md:pt-48 md:pb-32 px-6 md:px-12 max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 xl:gap-24 items-center" id="hero">
+        <motion.div {...fadeIn} className="z-10 max-w-xl xl:max-w-2xl">
           <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-6" id="badge">
             <CheckCircle2 className="w-4 h-4" /> Overhold bogføringsloven nemt
           </div>
-          <h1 className="text-5xl md:text-7xl font-extrabold leading-[1.1] mb-8 tracking-tight" id="hero-title">
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-[1.1] mb-8 tracking-tight" id="hero-title">
             Du skal ikke skifte dit <span className="text-blue-600">bogføringsprogram</span>
           </h1>
           <p className="text-xl text-slate-600 mb-10 leading-relaxed max-w-xl" id="hero-subtitle">
