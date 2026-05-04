@@ -59,8 +59,8 @@ export default function App() {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 md:pt-48 md:pb-32 px-6 md:px-12 max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center" id="hero">
-        <motion.div {...fadeIn}>
+      <section className="pt-32 pb-20 md:pt-48 md:pb-32 px-6 md:px-12 max-w-7xl mx-auto grid lg:grid-cols-2 gap-16 items-center" id="hero">
+        <motion.div {...fadeIn} className="z-10">
           <div className="inline-flex items-center gap-2 bg-blue-50 text-blue-700 px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider mb-6" id="badge">
             <CheckCircle2 className="w-4 h-4" /> Overhold bogføringsloven nemt
           </div>
@@ -92,22 +92,20 @@ export default function App() {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="relative hidden md:block"
+          className="relative hidden lg:block"
           id="hero-visual"
         >
           <div className="absolute -inset-4 bg-gradient-to-tr from-blue-100 to-indigo-100 rounded-3xl blur-3xl opacity-50 -z-10" />
           <div className="bg-white p-8 rounded-3xl shadow-2xl border border-slate-100 relative overflow-hidden" id="hero-card">
             <div className="flex justify-between items-center mb-8 border-b border-slate-100 pb-6">
-              <h3 className="font-bold text-lg text-slate-800">5 krav til digital bogføring</h3>
-              <FileDigit className="text-blue-500 w-5 h-5" />
+              <h3 className="font-bold text-lg text-slate-800">Automatiseringskrav</h3>
             </div>
             <div className="space-y-5">
               {[
-                'Nøjagtig registrering snarest muligt',
-                'Sikring af transaktionsspor',
-                'Sikring af kontrolspor og bilag',
-                'Betryggende opbevaring i 5 år',
-                'Sikring mod fejl og misbrug'
+                'E-faktura - dansk (OIOUBL/Nemhandel) og europæisk format (Peppol BIS)',
+                'Bankafstemning',
+                'SAF-T-fil',
+                'Back-up'
               ].map((item, idx) => (
                 <div key={idx} className="flex items-center gap-3">
                   <div className="w-6 h-6 rounded-full bg-blue-50 text-blue-600 flex items-center justify-center text-xs font-bold shrink-0">
@@ -119,57 +117,6 @@ export default function App() {
             </div>
           </div>
         </motion.div>
-      </section>
-
-      {/* Solutions / Pricing */}
-      <section className="bg-blue-600 py-24 text-white relative overflow-hidden" id="losninger">
-        <div className="absolute top-0 right-0 w-1/3 h-full bg-blue-500 opacity-50 skew-x-12 translate-x-32" />
-        <div className="max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-16 relative z-10" id="pricing-container">
-          <div>
-            <h2 className="text-4xl font-extrabold mb-8">Vi har sat os grundigt ind i loven - så du ikke behøver</h2>
-            <p className="text-xl text-blue-100 mb-10 leading-relaxed">
-              Vores løsninger gør det muligt at opfylde samtlige krav uden at bruge mange timer på it-udvikling eller lære komplicerede systemer.
-            </p>
-            <div className="space-y-4">
-              {['Simpelt og let trin-for-trin vejledning', 'Garanteret overholdelse af loven', 'Support på dansk', 'Ingen tekniske forkundskaber påkrævet'].map((item, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <CheckCircle2 className="text-blue-200 w-6 h-6" />
-                  <span className="font-medium">{item}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-          <div className="bg-white text-slate-900 p-10 rounded-3xl shadow-2xl relative" id="pricing-card">
-            <div className="absolute top-6 right-6 bg-red-500 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest animate-bounce">Populær</div>
-            <h3 className="text-2xl font-bold mb-2">Den samlede pakke</h3>
-            <p className="text-slate-500 mb-8 text-sm italic">Opfyld alle krav i én pakke</p>
-            <div className="flex items-baseline gap-2 mb-8" id="price">
-              <span className="text-6xl font-black tracking-tighter">1.995,-</span>
-              <span className="text-slate-400 font-bold uppercase tracking-widest text-xs">Ex. Moms</span>
-            </div>
-            <ul className="space-y-5 mb-10">
-              <li className="flex items-center gap-3 text-sm font-medium border-b border-slate-100 pb-4">
-                <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0" />
-                Opfylder alle krav til digitale bogføringssystemer
-              </li>
-              <li className="flex items-center gap-3 text-sm font-medium border-b border-slate-100 pb-4">
-                <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0" />
-                Fuld løsning af bl.a. E-faktura & SAF-T
-              </li>
-              <li className="flex items-center gap-3 text-sm font-medium border-b border-slate-100 pb-4">
-                <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0" />
-                Fuld løsning til opbevaring af backup i EU (IAS 24)
-              </li>
-            </ul>
-            <a 
-              href="mailto:info@behold-dit-bogforingsprogram.dk" 
-              className="block w-full bg-blue-600 text-white text-center py-5 rounded-2xl text-lg font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-100"
-              id="cta-buy"
-            >
-              Kom godt i gang
-            </a>
-          </div>
-        </div>
       </section>
 
       {/* Constraints Grid */}
@@ -205,16 +152,66 @@ export default function App() {
         </motion.div>
       </section>
 
-
       {/* Software Support */}
       <section className="py-20 bg-slate-100" id="software">
-        <div className="max-w-7xl mx-auto px-6 text-center">
+        <div className="max-w-7xl mx-auto px-6 text-center" id="software-container">
           <h2 className="text-2xl font-bold text-slate-500 uppercase tracking-widest mb-12">Vi understøtter bl.a.</h2>
           <div className="flex flex-wrap justify-center gap-8 md:gap-20 opacity-50 grayscale hover:grayscale-0 transition-all cursor-default" id="software-logos">
             <span className="text-3xl font-extrabold tracking-tight">Microsoft Business Central - on premise</span>
             <span className="text-3xl font-extrabold tracking-tight">C5</span>
             <span className="text-3xl font-extrabold tracking-tight">Navision</span>
             <span className="text-3xl font-extrabold tracking-tight">XAL</span>
+          </div>
+        </div>
+      </section>
+
+      {/* Solutions / Pricing */}
+      <section className="bg-blue-600 py-24 text-white relative overflow-hidden" id="losninger">
+        <div className="absolute top-0 right-0 w-1/3 h-full bg-blue-500 opacity-50 skew-x-12 translate-x-32" />
+        <div className="max-w-7xl mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-16 relative z-10" id="pricing-container">
+          <div>
+            <h2 className="text-4xl font-extrabold mb-8">Vi har sat os grundigt ind i loven - så du ikke behøver</h2>
+            <p className="text-xl text-blue-100 mb-10 leading-relaxed">
+              Vores løsninger gør det muligt at opfylde samtlige krav uden at bruge mange timer på it-udvikling eller lære komplicerede systemer.
+            </p>
+            <div className="space-y-4">
+              {['Simpelt og let trin-for-trin vejledning', 'Garanteret overholdelse af loven', 'Support på dansk', 'Ingen tekniske forkundskaber påkrævet'].map((item, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <CheckCircle2 className="text-blue-200 w-6 h-6" />
+                  <span className="font-medium">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="bg-white text-slate-900 p-10 rounded-3xl shadow-2xl relative" id="pricing-card">
+            <div className="absolute top-6 right-6 bg-red-500 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest animate-bounce">Populær</div>
+            <h3 className="text-2xl font-bold mb-2">Den samlede pakke</h3>
+            <p className="text-slate-500 mb-8 text-sm italic">Opfyld alle krav i én pakke</p>
+            <div className="flex items-baseline gap-2 mb-8" id="price">
+              <span className="text-6xl font-black tracking-tighter">1.995,-</span>
+              <span className="text-slate-400 font-bold uppercase tracking-widest text-xs">Ex. Moms</span>
+            </div>
+            <ul className="space-y-5 mb-10">
+              <li className="flex items-center gap-3 text-sm font-medium border-b border-slate-100 pb-4">
+                <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0" />
+                Opfylder alle krav til digitale bogføringssystemer
+              </li>
+              <li className="flex items-center gap-3 text-sm font-medium border-b border-slate-100 pb-4" id="efaktura-solution">
+                <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0" />
+                Fuld løsning af bl.a. E-faktura & SAF-T
+              </li>
+              <li className="flex items-center gap-3 text-sm font-medium border-b border-slate-100 pb-4">
+                <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0" />
+                Fuld løsning til opbevaring af backup i EU (IAS 24)
+              </li>
+            </ul>
+            <a 
+              href="mailto:info@behold-dit-bogforingsprogram.dk" 
+              className="block w-full bg-blue-600 text-white text-center py-5 rounded-2xl text-lg font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-100"
+              id="cta-buy"
+            >
+              Kom godt i gang
+            </a>
           </div>
         </div>
       </section>
@@ -227,6 +224,20 @@ export default function App() {
             <p className="text-slate-400 text-lg mb-8 leading-relaxed">
               Laursen Consulting ApS er specialister i at rådgive små og mellemstore virksomheder. Vi forstår vigtigheden af sammenhængen mellem kvalitet og pris.
             </p>
+            <div className="space-y-4 mb-8">
+              <div className="flex items-center gap-3 text-blue-400 font-medium">
+                <Mail className="w-5 h-5" />
+                <a href="mailto:info@behold-dit-bogforingsprogram.dk" className="hover:underline">info@behold-dit-bogforingsprogram.dk</a>
+              </div>
+              <div className="flex items-start gap-3 text-slate-400">
+                <MapPin className="w-5 h-5 mt-1 shrink-0" />
+                <span>Store Kongensgade 85, 4. sal, 1264 København K</span>
+              </div>
+              <div className="flex items-center gap-3 text-slate-400">
+                <ShieldCheck className="w-5 h-5 shrink-0" />
+                <span>CVR-nr: 4124 2647</span>
+              </div>
+            </div>
             <div className="bg-blue-600/20 border border-blue-600/30 p-8 rounded-3xl relative" id="expert-note">
               <Info className="absolute -top-4 -left-4 bg-blue-600 w-10 h-10 p-2 rounded-xl" />
               <p className="italic text-lg font-medium leading-relaxed">
@@ -247,64 +258,9 @@ export default function App() {
         </div>
       </section>
 
-      {/* Warning Section (Moved to end) */}
-      <section className="bg-white py-24" id="warning">
-        <div className="max-w-4xl mx-auto px-6 text-center">
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="bg-amber-50 border-2 border-amber-100 p-12 rounded-[2.5rem]"
-          >
-            <AlertCircle className="w-16 h-16 text-amber-600 mx-auto mb-8" />
-            <h2 className="text-3xl md:text-5xl font-black mb-8 leading-tight text-slate-900">
-              Bøder op til <span className="text-amber-600 italic text-4xl md:text-6xl block mt-2">1,5 mio. kr.</span>
-            </h2>
-            <p className="text-xl text-slate-700 leading-relaxed mb-8 font-medium">
-              Folketinget har bestemt, at danske selskaber og visse enkeltmandsvirksomheder (over 300.000 kr. omsætning) SKAL bruge et digitalt bogføringssystem. Kravene gælder allerede for selskaber, og fra 1. januar 2026 for enkeltmandsvirksomheder.
-            </p>
-            <div className="text-slate-400 text-[10px] font-bold uppercase tracking-widest">
-              Kilder: Bogføringslovens § 33 og bekendtgørelse nr. 205
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
       {/* Footer */}
-      <footer className="bg-white border-t border-slate-200 py-20 px-6 md:px-12" id="footer">
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between gap-12" id="footer-content">
-          <div className="max-w-sm space-y-6">
-            <div className="flex items-center gap-2">
-              <ShieldCheck className="text-blue-600 w-8 h-8" />
-              <span className="text-xl font-bold tracking-tight text-slate-800">Behold dit bogføringsprogram</span>
-            </div>
-            <p className="text-slate-500 text-sm leading-relaxed">
-              Udbydes af Laursen Consulting ApS. Dansk firma med base i København, der hjælper SMV'er med lovmæssig digitalisering.
-            </p>
-          </div>
-          <div className="grid grid-cols-2 gap-12">
-            <div className="space-y-4">
-              <h5 className="font-bold text-sm uppercase tracking-widest text-slate-400">Kontakt</h5>
-              <div className="space-y-3">
-                <a href="mailto:info@behold-dit-bogforingsprogram.dk" className="flex items-center gap-2 text-sm font-semibold hover:text-blue-600">
-                  <Mail className="w-4 h-4" /> E-mail
-                </a>
-                <div className="flex items-start gap-2 text-sm text-slate-600">
-                  <MapPin className="w-4 h-4 mt-0.5" />
-                  <span>Store Kongensgade 85, 4. sal<br />1264 København K</span>
-                </div>
-              </div>
-            </div>
-            <div className="space-y-4">
-              <h5 className="font-bold text-sm uppercase tracking-widest text-slate-400">Firma Info</h5>
-              <div className="space-y-2 text-sm text-slate-600">
-                <p>Laursen Consulting ApS</p>
-                <p>CVR-nr: 4124 2647</p>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="max-w-7xl mx-auto mt-20 pt-8 border-t border-slate-100 text-slate-400 text-xs flex flex-col md:flex-row justify-center gap-4">
+      <footer className="bg-white border-t border-slate-200 py-12 px-6 md:px-12 text-center" id="footer">
+        <div className="max-w-7xl mx-auto text-slate-400 text-xs">
           <p>© 2024 Laursen Consulting ApS. Alle rettigheder forbeholdes.</p>
         </div>
       </footer>
