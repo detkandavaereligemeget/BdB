@@ -1,20 +1,44 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+# Behold dit bogføringsprogram
 
-# Run and deploy your AI Studio app
+En professionel landingsside bygget med React, Vite og Tailwind CSS.
 
-This contains everything you need to run your app locally.
+## Lokal udvikling
 
-View your app in AI Studio: https://ai.studio/apps/2470fe27-389e-4bd5-8184-53f99b2d142a
+1. Installer afhængigheder:
+   ```bash
+   npm install
+   ```
 
-## Run Locally
+2. Start udviklingsserver:
+   ```bash
+   npm run dev
+   ```
 
-**Prerequisites:**  Node.js
+## Implementering på GitHub Pages
 
+For at deploye til dit eget domæne (`behold-dit-bogforingsprogram.dk`):
 
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+1. **GitHub Settings**: 
+   Gå til dit repository på GitHub -> **Settings** -> **Pages**.
+   
+2. **Build and Deployment**:
+   Vælg "GitHub Actions" som kilde.
+   
+3. **Konfiguration**:
+   Vite bygger som standard til `dist/` mappen. 
+
+### Manuel build (uden GitHub Actions)
+
+Hvis du vil uploade manuelt til en host (fx Simply.com):
+
+1. Kør build kommandoen:
+   ```bash
+   npm run build
+   ```
+2. Upload alt indholdet fra den genererede `dist/` mappe til din webhosts root (typisk `public_html`, `www` eller lignende).
+
+## DNS Indstillinger
+
+Dine DNS indstillinger ser korrekte ud i dit screenshot. Sørg for at:
+- `www` CNAME peger på `din-bruger.github.io`
+- Apex domænet (`@`) har de 4 A records til GitHubs IP'er (som vist i dit billede).

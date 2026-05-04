@@ -330,56 +330,71 @@ export default function App() {
 const requirements = [
   {
     title: 'Registreringsdata',
-    desc: 'Systemet skal indeholde felter til transaktionsdato, beløb, bilagsnummer, transaktionstekst og kurs hvis i andet end DKK.',
-    paragraph: '§ 3, stk. 1',
+    desc: 'Systemet skal indeholde felter til transaktionsdato (fx betalingsdato eller købsdato), beløb, bilagsnummer, transaktionstekst og kurs hvis i andet end DKK.',
+    paragraph: 'Bekendtgørelsens § 3, stk. 1',
     icon: Database
   },
   {
     title: 'Transaktionsdata',
-    desc: 'Hver transaktion skal tildeles løbenummer, registreringsdato og initialer på personen eller programmet bag.',
-    paragraph: '§ 3, stk. 2',
+    desc: 'Hver transaktion skal tildeles en registreringsdato, et fortløbende transaktionsnummer/id og initialer på personen eller programmet bag.',
+    paragraph: 'Bekendtgørelsens § 3, stk. 2',
     icon: FileDigit
   },
   {
     title: 'Beskyttelse af data',
-    desc: 'Systemet skal gemme ændringer (audit trail). Brugerne må ikke kunne slette eller tilbagedatere transaktioner.',
-    paragraph: '§ 3, stk. 3',
+    desc: 'Systemet skal gemme ændringer. Fejlposteringer skal rettes ved nye posteringer. Brugere må ikke kunne ændre eller slette posterede data.',
+    paragraph: 'Bekendtgørelsens § 3, stk. 3',
     icon: ShieldCheck
   },
   {
     title: 'It-sikkerhed',
-    desc: 'Systemet skal opfylde anerkendte standarder for it-sikkerhed, herunder styring af brugeradgang.',
-    paragraph: '§ 15, stk. 1',
+    desc: 'Systemet skal opfylde anerkendte standarder for it-sikkerhed, herunder styring af brugeradgang og logs.',
+    paragraph: 'Bogføringslovens § 15',
     icon: ShieldCheck
   },
   {
+    title: 'Opbevaring af bilag',
+    desc: 'Kan opbevare dokumentation med udstedelsesdato, leverancens art, beløb, afsender/modtager (navn, adresse, CVR) og momsoplysninger.',
+    paragraph: 'Bekendtgørelsens § 3, stk. 4',
+    icon: FileText
+  },
+  {
     title: 'Backup hos 3. part',
-    desc: 'Ugentlig sikkerhedskopi skal tages. Denne skal opbevares hos en uafhængig part på en server i EU eller EØS.',
-    paragraph: '§ 4, stk. 2',
+    desc: 'Ugentlig sikkerhedskopi skal tages og opbevares hos en ikke-nærtstående part på en server i et EU- eller EØS-land.',
+    paragraph: 'Bekendtgørelsens § 4',
     icon: Share2
   },
   {
     title: 'E-fakturering',
-    desc: 'Systemet skal automatisk kunne sende og modtage e-fakturaer og kreditnotaer i OIOUBL- eller Peppol BIS-format.',
-    paragraph: '§ 5, stk. 1',
+    desc: 'Automatisk afsendelse og modtagelse af e-fakturaer og kreditnotaer i OIOUBL- eller Peppol BIS-format via Nemhandel.',
+    paragraph: 'Bekendtgørelsens § 5',
     icon: Euro
   },
   {
-    title: 'Fildeling (SAF-T)',
-    desc: 'Systemet skal understøtte deling af data ved at kunne generere en SAF-T-fil efter Erhvervsstyrelsens definitioner.',
-    paragraph: '§ 5, stk. 1',
+    title: 'SAF-T Fildeling',
+    desc: 'Understøtter fildeling ved at kunne generere en SAF-T-fil efter Erhvervsstyrelsens gældende definitioner.',
+    paragraph: 'Bekendtgørelsens § 5',
     icon: Share2
   },
   {
     title: 'Bankafstemning',
-    desc: 'Systemet skal understøtte afstemning med bankkonto og tydeligt fremhæve eventuelle differencer.',
-    paragraph: '§ 5, stk. 1',
+    desc: 'Understøtter afstemning med bankkonto og skal tydeligt fremhæve differencer, hvis en postering ikke stemmer.',
+    paragraph: 'Bekendtgørelsens § 5',
     icon: ShieldCheck
+  }
+];
+
+const testimonials = [
+  {
+    text: "Jeg er imponeret over den simple løsningsmodel, som I er kommet frem til. Genialt!",
+    author: "Kim Erik Thomsen, Managing Director, Logic IO"
   },
   {
-    title: 'Procedurebeskrivelse',
-    desc: 'Virksomheden skal opdatere sin bogføringsprocedurebeskrivelse med reglerne for systemets anvendelse.',
-    paragraph: '§ 6',
-    icon: FileText
+    text: "En simpel og let løsning som bragte os helt i mål med at opfylde bogføringslovens krav.",
+    author: "Jesper Tejls, Salgschef, Trendenz ApS"
+  },
+  {
+    text: "Jeg kan stærkt anbefale løsningen. Det er en simpel, genial og gennemtænkt model til en nærmest foræringspris.",
+    author: "Uddrag fra Trustpilot"
   }
 ];
