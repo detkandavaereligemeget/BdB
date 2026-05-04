@@ -1,10 +1,5 @@
-/**
- * @license
- * SPDX-License-Identifier: Apache-2.0
- */
-
-import React from 'react';
-import { motion } from 'motion/react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'motion/react';
 import { 
   ShieldCheck, 
   AlertCircle, 
@@ -18,7 +13,10 @@ import {
   MapPin,
   FileDigit,
   ArrowRight,
-  Info
+  Info,
+  ChevronLeft,
+  Loader2,
+  Lock
 } from 'lucide-react';
 
 const fadeIn = {
@@ -36,12 +34,320 @@ const stagger = {
 };
 
 export default function App() {
+  const [showContactPage, setShowContactPage] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  
+  // Form State
+  const [formData, setFormData] = useState({
+    navn: '',
+    email: '',
+    virksomhed: '',
+    program: '',
+    hasBackup: false,
+    backupDetails: {
+      frekvens: '',
+      ekstern: false
+    },
+    hasEfaktura: false,
+    efakturaType: 'OIOUBL/Nemhandel',
+    hasBank: false,
+    hasSaft: false,
+    fritekst: '',
+    systemUpdate: false,
+    humanCheck: ''
+  });
+
+  const handleContactClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowContactPage(true);
+    window.scrollTo(0, 0);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    // Simple human check
+    if (formData.humanCheck.toLowerCase() !== 'menneske' && formData.humanCheck !== '8') {
+      alert("Venligst bekræft at du er et menneske (Svar 8 eller skriv menneske)");
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData)
+      });
+      
+      if (response.ok) {
+        setFormSubmitted(true);
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      alert("Der skete en fejl. Prøv venligst igen senere.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  if (showContactPage) {
+    return (
+      <div className="min-h-screen bg-slate-50 font-sans text-slate-900 pb-20">
+        <nav className="bg-white border-b border-slate-200 py-4 px-6 md:px-12 flex justify-between items-center sticky top-0 z-50">
+          <div className="flex items-center gap-2 cursor-pointer" onClick={() => setShowContactPage(false)}>
+            <img src="/logo.png" alt="Logo" className="h-10 w-auto" onError={(e) => e.currentTarget.style.display = 'none'} />
+            <ShieldCheck className="text-blue-600 w-8 h-8 md:hidden" />
+            <span className="text-xl font-bold tracking-tight text-slate-800">Behold dit bogføringsprogram</span>
+          </div>
+          <button 
+            onClick={() => setShowContactPage(false)}
+            className="text-slate-500 hover:text-slate-800 flex items-center gap-2 font-medium transition-colors"
+          >
+            <ChevronLeft className="w-5 h-5" /> Tilbage
+          </button>
+        </nav>
+
+        <div className="max-w-3xl mx-auto px-6 mt-12">
+          <AnimatePresence mode="wait">
+            {!formSubmitted ? (
+              <motion.div 
+                key="form"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                className="bg-white p-8 md:p-12 rounded-[2.5rem] shadow-xl border border-slate-100"
+              >
+                <h1 className="text-3xl font-black mb-2">Kom godt i gang</h1>
+                <p className="text-slate-500 mb-10">Udfyld formularen, så kontakter vi dig med det samme.</p>
+
+                <form onSubmit={handleSubmit} className="space-y-8">
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold uppercase tracking-widest text-slate-400">Navn</label>
+                      <input 
+                        required
+                        type="text" 
+                        className="w-full px-5 py-4 bg-slate-50 border-0 rounded-2xl focus:ring-2 focus:ring-blue-600 transition-all"
+                        placeholder="Dit fulde navn"
+                        value={formData.navn}
+                        onChange={e => setFormData({...formData, navn: e.target.value})}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold uppercase tracking-widest text-slate-400">E-mail</label>
+                      <input 
+                        required
+                        type="email" 
+                        className="w-full px-5 py-4 bg-slate-50 border-0 rounded-2xl focus:ring-2 focus:ring-blue-600 transition-all"
+                        placeholder="din@email.dk"
+                        value={formData.email}
+                        onChange={e => setFormData({...formData, email: e.target.value})}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold uppercase tracking-widest text-slate-400">Virksomhed og CVR-nr.</label>
+                      <input 
+                        required
+                        type="text" 
+                        className="w-full px-5 py-4 bg-slate-50 border-0 rounded-2xl focus:ring-2 focus:ring-blue-600 transition-all"
+                        placeholder="Virksomhed ApS, 12345678"
+                        value={formData.virksomhed}
+                        onChange={e => setFormData({...formData, virksomhed: e.target.value})}
+                      />
+                    </div>
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold uppercase tracking-widest text-slate-400">Bogføringsprogram</label>
+                      <input 
+                        required
+                        type="text" 
+                        className="w-full px-5 py-4 bg-slate-50 border-0 rounded-2xl focus:ring-2 focus:ring-blue-600 transition-all"
+                        placeholder="F.eks. Business Central, C5 eller lign."
+                        value={formData.program}
+                        onChange={e => setFormData({...formData, program: e.target.value})}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="space-y-6 pt-6 border-t border-slate-100">
+                    <h3 className="font-bold text-lg">Dit nuværende system:</h3>
+                    
+                    <div className="space-y-4">
+                      {/* Backup */}
+                      <div className="space-y-4">
+                        <label className="flex items-center gap-3 cursor-pointer group">
+                          <input 
+                            type="checkbox" 
+                            className="w-6 h-6 rounded-lg text-blue-600 border-slate-200 focus:ring-blue-600"
+                            checked={formData.hasBackup}
+                            onChange={e => setFormData({...formData, hasBackup: e.target.checked})}
+                          />
+                          <span className="font-medium group-hover:text-blue-600 transition-colors">Tager løbende backup</span>
+                        </label>
+                        {formData.hasBackup && (
+                          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="pl-9 space-y-4">
+                            <input 
+                              type="text" 
+                              className="w-full px-4 py-3 bg-slate-50 border-0 rounded-xl text-sm"
+                              placeholder="Hvor ofte tages der backup?"
+                              value={formData.backupDetails.frekvens}
+                              onChange={e => setFormData({...formData, backupDetails: {...formData.backupDetails, frekvens: e.target.value}})}
+                            />
+                            <label className="flex items-center gap-3 cursor-pointer text-sm text-slate-600">
+                              <input 
+                                type="checkbox" 
+                                className="w-5 h-5 rounded text-blue-600"
+                                checked={formData.backupDetails.ekstern}
+                                onChange={e => setFormData({...formData, backupDetails: {...formData.backupDetails, ekstern: e.target.checked}})}
+                              />
+                              Sikkerhedskopi ligger hos ekstern tredjepart i EU/EØS
+                            </label>
+                          </motion.div>
+                        )}
+                      </div>
+
+                      {/* E-faktura */}
+                      <div className="space-y-4">
+                        <label className="flex items-center gap-3 cursor-pointer group">
+                          <input 
+                            type="checkbox" 
+                            className="w-6 h-6 rounded-lg text-blue-600 border-slate-200"
+                            checked={formData.hasEfaktura}
+                            onChange={e => setFormData({...formData, hasEfaktura: e.target.checked})}
+                          />
+                          <span className="font-medium group-hover:text-blue-600 transition-colors">Har e-faktura-funktion</span>
+                        </label>
+                        {formData.hasEfaktura && (
+                          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="pl-9">
+                            <select 
+                              className="w-full px-4 py-3 bg-slate-50 border-0 rounded-xl text-sm"
+                              value={formData.efakturaType}
+                              onChange={e => setFormData({...formData, efakturaType: e.target.value})}
+                            >
+                              <option>OIOUBL/Nemhandel</option>
+                              <option>Peppol BIS</option>
+                              <option>Begge dele</option>
+                            </select>
+                          </motion.div>
+                        )}
+                      </div>
+
+                      {/* Bank & Saft */}
+                      <label className="flex items-center gap-3 cursor-pointer group">
+                        <input 
+                          type="checkbox" 
+                          className="w-6 h-6 rounded-lg text-blue-600 border-slate-200"
+                          checked={formData.hasBank}
+                          onChange={e => setFormData({...formData, hasBank: e.target.checked})}
+                        />
+                        <span className="font-medium group-hover:text-blue-600 transition-colors">Har bankafstemningsfunktion</span>
+                      </label>
+
+                      <label className="flex items-center gap-3 cursor-pointer group">
+                        <input 
+                          type="checkbox" 
+                          className="w-6 h-6 rounded-lg text-blue-600 border-slate-200"
+                          checked={formData.hasSaft}
+                          onChange={e => setFormData({...formData, hasSaft: e.target.checked})}
+                        />
+                        <span className="font-medium group-hover:text-blue-600 transition-colors">Har SAF-T-fil</span>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="space-y-2">
+                    <label className="text-xs font-bold uppercase tracking-widest text-slate-400">Har du nogle spørgsmål?</label>
+                    <textarea 
+                      className="w-full px-5 py-4 bg-slate-50 border-0 rounded-2xl focus:ring-2 focus:ring-blue-600 h-32"
+                      placeholder="Skriv dine spørgsmål her..."
+                      value={formData.fritekst}
+                      onChange={e => setFormData({...formData, fritekst: e.target.value})}
+                    />
+                  </div>
+
+                  <div className="bg-blue-50/50 p-6 rounded-3xl space-y-4">
+                    <label className="flex items-start gap-3 cursor-pointer group">
+                      <input 
+                        required
+                        type="checkbox" 
+                        className="w-6 h-6 mt-1 rounded-lg text-blue-600 border-slate-200"
+                        checked={formData.systemUpdate}
+                        onChange={e => setFormData({...formData, systemUpdate: e.target.checked})}
+                      />
+                      <span className="text-sm font-medium leading-relaxed">
+                        Vi bekræfter, at vi opdaterer løbende vores styresystem (Windows, Linux, MacOS) og har netbank hos en almindelig dansk bank.
+                      </span>
+                    </label>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-8 items-end">
+                    <div className="space-y-2">
+                      <label className="text-xs font-bold uppercase tracking-widest text-slate-400">Sikkerhedstjek: hvad er 5 + 3?</label>
+                      <input 
+                        required
+                        type="text" 
+                        className="w-full px-5 py-4 bg-slate-50 border-0 rounded-2xl focus:ring-2 focus:ring-blue-600"
+                        placeholder="Skriv svar her (fx 8 eller menneske)"
+                        value={formData.humanCheck}
+                        onChange={e => setFormData({...formData, humanCheck: e.target.value})}
+                      />
+                    </div>
+                    <button 
+                      disabled={isSubmitting}
+                      className="w-full bg-blue-600 text-white py-5 rounded-2xl text-lg font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-100 flex items-center justify-center gap-3 disabled:opacity-50"
+                    >
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="w-6 h-6 animate-spin" /> Sender...
+                        </>
+                      ) : (
+                        'Send besked'
+                      )}
+                    </button>
+                  </div>
+                </form>
+              </motion.div>
+            ) : (
+              <motion.div 
+                key="success"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="bg-white p-12 md:p-20 rounded-[3rem] shadow-2xl text-center"
+              >
+                <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8">
+                  <CheckCircle2 className="w-10 h-10" />
+                </div>
+                <h1 className="text-3xl font-black mb-4">Mailen er sendt!</h1>
+                <p className="text-xl text-slate-600 mb-8 leading-relaxed">
+                  Tak for din henvendelse. Vi vender tilbage til dig snarest muligt.
+                </p>
+                <p className="text-lg font-bold text-blue-600 mb-10">Hav en dejlig dag!</p>
+                <button 
+                  onClick={() => setShowContactPage(false)}
+                  className="bg-slate-900 text-white px-10 py-4 rounded-xl font-bold hover:bg-slate-800 transition-all"
+                >
+                  Gå tilbage til forsiden
+                </button>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen bg-slate-50 font-sans text-slate-900 overflow-x-hidden selection:bg-blue-100 selection:text-blue-900" id="main-wrapper">
       {/* Navigation */}
       <nav className="fixed top-0 w-full bg-white/80 backdrop-blur-md border-b border-slate-200 z-50 py-4 px-6 md:px-12 flex justify-between items-center" id="navbar">
         <div className="flex items-center gap-2" id="logo-container">
-          <ShieldCheck className="text-blue-600 w-8 h-8" />
+          <img src="/logo.png" alt="Logo" className="h-10 w-auto" onError={(e) => e.currentTarget.style.display = 'none'} />
+          <ShieldCheck className="text-blue-600 w-8 h-8 md:hidden" />
           <span className="text-xl font-bold tracking-tight text-slate-800">Behold dit bogføringsprogram</span>
         </div>
         <div className="hidden md:flex gap-8 items-center" id="nav-links">
@@ -184,34 +490,54 @@ export default function App() {
             </div>
           </div>
           <div className="bg-white text-slate-900 p-10 rounded-3xl shadow-2xl relative" id="pricing-card">
-            <div className="absolute top-6 right-6 bg-red-500 text-white px-4 py-1 rounded-full text-xs font-bold uppercase tracking-widest animate-bounce">Populær</div>
+            <div className="absolute top-6 right-6 bg-red-500 text-white px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest animate-pulse">Spar 40 %</div>
             <h3 className="text-2xl font-bold mb-2">Den samlede pakke</h3>
-            <p className="text-slate-500 mb-8 text-sm italic">Opfyld alle krav i én pakke</p>
+            <p className="text-slate-500 mb-8 text-sm italic">Opfyld alle automatiseringskravene i én pakke</p>
             <div className="flex items-baseline gap-2 mb-8" id="price">
               <span className="text-6xl font-black tracking-tighter">1.995,-</span>
               <span className="text-slate-400 font-bold uppercase tracking-widest text-xs">Ex. Moms</span>
             </div>
             <ul className="space-y-5 mb-10">
-              <li className="flex items-center gap-3 text-sm font-medium border-b border-slate-100 pb-4">
-                <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0" />
-                Opfylder alle krav til digitale bogføringssystemer
+              <li className="flex items-start gap-3 text-sm font-medium border-b border-slate-100 pb-4">
+                <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0 mt-0.5" />
+                Kræver minimal indsats at sætte op
               </li>
-              <li className="flex items-center gap-3 text-sm font-medium border-b border-slate-100 pb-4" id="efaktura-solution">
-                <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0" />
-                Fuld løsning af bl.a. E-faktura & SAF-T
+              <li className="flex items-start gap-3 text-sm font-medium border-b border-slate-100 pb-4">
+                <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0 mt-0.5" />
+                Kan klares på én dag
               </li>
-              <li className="flex items-center gap-3 text-sm font-medium border-b border-slate-100 pb-4">
-                <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0" />
-                Fuld løsning til opbevaring af backup i EU (IAS 24)
+              <li className="flex items-start gap-3 text-sm font-medium border-b border-slate-100 pb-4">
+                <CheckCircle2 className="text-green-500 w-5 h-5 flex-shrink-0 mt-0.5" />
+                Grundig vejledning og tekst til bogføringsprocedurebeskrivelsen følger med
               </li>
             </ul>
-            <a 
-              href="mailto:info@behold-dit-bogforingsprogram.dk" 
+            <button 
+              onClick={handleContactClick}
               className="block w-full bg-blue-600 text-white text-center py-5 rounded-2xl text-lg font-bold hover:bg-blue-700 transition-all shadow-xl shadow-blue-100"
               id="cta-buy"
             >
               Kom godt i gang
-            </a>
+            </button>
+
+            {/* Individual Prices */}
+            <div className="mt-12 pt-8 border-t border-slate-100">
+              <h4 className="text-xs font-bold uppercase tracking-widest text-slate-400 mb-6">Priser på enkelte moduler</h4>
+              <div className="space-y-4">
+                {[
+                  { name: 'E-faktura', price: '995,-' },
+                  { name: 'SAF-T-fil', price: '1.195,-' },
+                  { name: 'Bankafstemning', price: '345,-' },
+                  { name: 'Sikkerhedskopiering (opbevaring)', price: '795,-' },
+                  { name: 'Kontoplan', price: 'Gratis' },
+                  { name: 'Tjek af SAF-T-fil', price: '495,-' }
+                ].map((item, idx) => (
+                  <div key={idx} className="flex justify-between items-center text-sm">
+                    <span className="text-slate-600">{item.name}</span>
+                    <span className="font-bold tabular-nums">{item.price}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -260,7 +586,7 @@ export default function App() {
 
       {/* Footer */}
       <footer className="bg-white border-t border-slate-200 py-12 px-6 md:px-12 text-center" id="footer">
-        <div className="max-w-7xl mx-auto text-slate-400 text-xs">
+        <div className="max-w-7xl mx-auto text-slate-400 text-xs text-center border-t border-slate-100 pt-8 mt-8">
           <p>© 2024 Laursen Consulting ApS. Alle rettigheder forbeholdes.</p>
         </div>
       </footer>
@@ -295,7 +621,7 @@ const requirements = [
   },
   {
     title: 'Opbevaring af bilag',
-    desc: 'Kan opbevare dokumentation med udstedelsesdato, leverancens art, beløb, afsender/modtager (navn, adresse, CVR) og momsoplysninger.',
+    desc: 'Can opbevare dokumentation med udstedelsesdato, leverancens art, beløb, afsender/modtager (navn, adresse, CVR) og momsoplysninger.',
     paragraph: 'Bekendtgørelsens § 3, stk. 4',
     icon: FileText
   },
@@ -322,20 +648,5 @@ const requirements = [
     desc: 'Understøtter afstemning med bankkonto og skal tydeligt fremhæve differencer, hvis en postering ikke stemmer.',
     paragraph: 'Bekendtgørelsens § 5',
     icon: ShieldCheck
-  }
-];
-
-const testimonials = [
-  {
-    text: "Jeg er imponeret over den simple løsningsmodel, som I er kommet frem til. Genialt!",
-    author: "Kim Erik Thomsen, Managing Director, Logic IO"
-  },
-  {
-    text: "En simpel og let løsning som bragte os helt i mål med at opfylde bogføringslovens krav.",
-    author: "Jesper Tejls, Salgschef, Trendenz ApS"
-  },
-  {
-    text: "Jeg kan stærkt anbefale løsningen. Det er en simpel, genial og gennemtænkt model til en nærmest foræringspris.",
-    author: "Uddrag fra Trustpilot"
   }
 ];
