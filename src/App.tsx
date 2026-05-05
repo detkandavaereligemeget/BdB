@@ -96,7 +96,6 @@ export default function App() {
     hasBank: false,
     hasSaft: false,
     fritekst: '',
-    systemUpdate: false,
     humanCheck: ''
   });
 
@@ -308,21 +307,6 @@ export default function App() {
                       value={formData.fritekst}
                       onChange={e => setFormData({...formData, fritekst: e.target.value})}
                     />
-                  </div>
-
-                  <div className="bg-blue-50/50 p-6 rounded-3xl space-y-4">
-                    <label className="flex items-start gap-3 cursor-pointer group">
-                      <input 
-                        required
-                        type="checkbox" 
-                        className="w-6 h-6 mt-1 rounded-lg text-blue-600 border-slate-200"
-                        checked={formData.systemUpdate}
-                        onChange={e => setFormData({...formData, systemUpdate: e.target.checked})}
-                      />
-                      <span className="text-sm font-medium leading-relaxed">
-                        Vi bekræfter, at vi opdaterer løbende vores styresystem (Windows, Linux, MacOS) og har netbank hos en almindelig dansk bank.
-                      </span>
-                    </label>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-8 items-end">
