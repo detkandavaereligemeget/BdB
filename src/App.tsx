@@ -600,12 +600,6 @@ export default function App() {
                 <span>CVR-nr: 4124 2647</span>
               </div>
             </div>
-            <div className="bg-blue-600/20 border border-blue-600/30 p-8 rounded-3xl relative" id="expert-note">
-              <Info className="absolute -top-4 -left-4 bg-blue-600 w-10 h-10 p-2 rounded-xl" />
-              <p className="italic text-lg font-medium leading-relaxed">
-                "Dennis skrev bekendtgørelserne om digital bogføring, da han var ansat som chefkonsulent i Erhvervsstyrelsen. Vi kender derfor kravene bedre end de fleste."
-              </p>
-            </div>
           </div>
           <div className="grid grid-cols-1 gap-4" id="consultants">
             <div className="bg-slate-800/50 p-6 rounded-3xl border border-slate-700">
